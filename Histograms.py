@@ -33,8 +33,11 @@ class histogram():
                                                                             'Republic of Korea': 'Korea, South',
                                                                             'Iran (Islamic Republic of)': 'Iran', })
         self.covid_world = self.covid.groupby('Date')[['Confirmed', 'Recovered', 'Deaths', 'Infected']].sum()
-        self.latest_confirmed = pd.DataFrame()
-        self.covid_countries = pd.DataFrame()
+        country = self.confirmed.groupby(['Country/Region']).sum()
+        self.latest_confirmed = country[country.columns[-1]].sort_values(ascending=False).astype(int).to_frame(
+            'Confirmed').reset_index()
+        self.covid_countries = self.covid.groupby(['Country/Region', 'Date'])[
+            'Confirmed', 'Recovered', 'Deaths', 'Infected'].sum()
 
     # print the total world numbers
     def world_numbers(self):
@@ -51,9 +54,6 @@ class histogram():
 
     # print confirmed by country from largest to smallest
     def confirmed_by_country(self):
-        country = self.confirmed.groupby(['Country/Region']).sum()
-        self.latest_confirmed = country[country.columns[-1]].sort_values(ascending=False).astype(int).to_frame(
-             'Confirmed').reset_index()
         latest_confirmed_updated = self.latest_confirmed.nlargest(20, 'Confirmed')
         print(latest_confirmed_updated)
         fig = px.bar(self.latest_confirmed.nlargest(20, 'Confirmed'), x='Country/Region', y='Confirmed')
@@ -61,9 +61,6 @@ class histogram():
 
     # print top ten affected countries
     def top_ten_affected(self):
-        self.covid_countries = self.covid.groupby(['Country/Region', 'Date'])[
-            'Confirmed', 'Recovered', 'Deaths', 'Infected'].sum()
-
         covid_countries_long = self.covid_countries.reset_index().melt(id_vars=['Date', 'Country/Region'], var_name='Status',
                                                                   value_name='Subjects')
 
