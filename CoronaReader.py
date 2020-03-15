@@ -1,7 +1,5 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt;
-import seaborn as sns
+import matplotlib.pyplot as plt
 import plotly.express as px
 import re
 
@@ -10,7 +8,7 @@ px.defaults.template = 'plotly_dark'
 plt.rcParams['figure.dpi'] = 100
 
 
-class histogram():
+class coronareader():
 
     def __init__(self):
         filename_pattern = "novel-corona-virus-2019-dataset/time_series_covid_19_{}.csv"

@@ -1,5 +1,8 @@
 import CoronaReader
+import SARSReader
 
 if __name__=='__main__':
-    hist = CoronaReader.histogram()
-    hist.world_numbers()
+    Chist = CoronaReader.coronareader()
+    Chist.recov_death_rates()
+    Shist = SARSReader.sarsreader()
+    Shist.recov_death_rates()
