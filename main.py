@@ -1,5 +1,5 @@
-import Histograms
+import CoronaReader
 
 if __name__=='__main__':
-    hist = Histograms.histogram()
+    hist = CoronaReader.histogram()
     hist.world_numbers()
